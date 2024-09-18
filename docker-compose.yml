@@ -22,7 +22,7 @@ services:
     volumes:
       - ./nodejs:/usr/src/app
     ports:
-      - 3500:3000
+      - 3500:3500
     command: sh -c "npm i && npm i -g nodemon && nodemon"
 
   tomcat:
