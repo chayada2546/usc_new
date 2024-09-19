@@ -23,14 +23,16 @@ app.listen(3500, () => {
 });
 
 // api 
-app.get('/api/geojson', async (req, res) => {
+app.get('/api/geojson/:aq/:year', async (req, res) => {
+    const { aq, year } = req.params
     try {
         const result = await pool.query(`
         SELECT json_build_object(
           'type', 'FeatureCollection',
           'features', json_agg(ST_AsGeoJSON(t.*)::json)
         ) AS geojson
-        FROM public.so2 t;
+        FROM ${aq} t
+        WHERE year=${year};
       `);
 
         res.json(result.rows[0].geojson);
@@ -39,3 +41,21 @@ app.get('/api/geojson', async (req, res) => {
         res.status(500).send('Error retrieving data from database');
     }
 });
+
+app.get("/api/getminmax/:aq/:year/:day", async (req, res) => {
+    const { aq, year, day } = req.params
+    console.log(aq, year, day);
+
+    try {
+        const result = await pool.query(`
+        SELECT min(${day}), max(${day}) FROM ${aq}
+        WHERE year=${year} AND usc != 'NaN';
+      `);
+        console.log(result);
+
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error retrieving data from database');
+    }
+})

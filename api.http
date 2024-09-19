@@ -1,1 +1,8 @@
 GET http://localhost:3000/api/co/sun/2020
+
+
+###
+GET http://localhost:3500/api/geojson/O3/2020/
+
+###
+GET http://localhost:3500/api/getminmax/O3/2020/tue

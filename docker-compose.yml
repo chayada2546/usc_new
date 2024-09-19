@@ -24,14 +24,12 @@ services:
     ports:
       - 3500:3500
     command: sh -c "npm i && npm i -g nodemon && nodemon"
-
-  tomcat:
-    image: tomcat:8-jre11
-    container_name: rtk_tomcat
-    depends_on:
-      - postgis
-    volumes:
-      - ./tomcat/:/usr/local/tomcat/webapps/
-      # - ./tomcat/fonts/truetype/:/usr/share/fonts/truetype/
-    ports:
-      - 8080:8080
+  # tomcat:
+  #   image: tomcat:8-jre11
+  #   container_name: rtk_tomcat
+  #   depends_on:
+  #     - postgis
+  #   volumes:
+  #     - ./tomcat/:/usr/local/tomcat/webapps/
+  #   ports:
+  #     - 8080:8080

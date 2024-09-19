@@ -12,18 +12,57 @@
 </head>
 
 <body>
+    <div class="container mt-3  mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="pollutant" class="form-label">มลพิษทางอากาศ:</label>
+                <select class="form-select" id="type-pollutant" onchange="getData()">
+                    <option value="CO">คาร์บอนมอนอกไซด์ (CO)</option>
+                    <option value="NO2">ไนโตรเจนไดออกไซด์ (NO2)</option>
+                    <option value="SO2">ซัลเฟอร์ไดออกไซด์ (SO2)</option>
+                    <option value="O3">โอโซน (O3)</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label for="year" class="form-label">ปี:</label>
+                <select class="form-select" id="year" onchange="getData()">
+                    <option value="2020">2563-2564</option>
+                    <option value="2021">2564-2565</option>
+                    <option value="2022">2565-2566</option>
+                    <option value="2023">2566-2567</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="day" class="form-label">วัน:</label>
+                <select class="form-select" id="day" onchange="hexSel()">
+                    <option value="sun">อาทิตย์</option>
+                    <option value="mon">จันทร์</option>
+                    <option value="tue">อังคาร</option>
+                    <option value="wed">พุธ</option>
+                    <option value="thu">พฤหัสบดี</option>
+                    <option value="fri">ศุกร์</option>
+                    <option value="sat">เสาร์</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
+
+
+        <input type="text" id="datasource">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="building" onchange="buildingChk()">
             <label class="form-check-label" for="flexSwitchCheckDefault">3d building</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="hex" onchange="hexChk()">
+            <input class="form-check-input" type="checkbox" id="hex" onchange="hexChk()" checked>
             <label class="form-check-label" for="flexSwitchCheckDefault">3d hex</label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="wms" onchange="wmsChk()">
-            <label class="form-check-label" for="flexSwitchCheckDefault">wms</label>
+            <input class="form-check-input" type="checkbox" id="usc" onchange="uscChk()">
+            <label class="form-check-label" for="flexSwitchCheckDefault">usc</label>
         </div>
         <div id="map"></div>
     </div>

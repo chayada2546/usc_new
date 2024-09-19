@@ -1,0 +1,321 @@
+/* Reset margins and height for html and body */
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Style สำหรับปุ่มเปิดแถบข้าง */
+#openSidebar {
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+/* Style สำหรับแถบข้าง */
+.sidebar {
+    width: 60px;
+    transition: width 0.3s, opacity 0.3s;
+    opacity: 1;
+    overflow-x: hidden;
+    white-space: nowrap;
+    background-color: #222222;
+    position: fixed;
+    top: 0;
+    /* ตั้งค่าให้เริ่มที่ตำแหน่งบนสุด */
+    bottom: 0;
+    /* ตั้งค่าให้ขยายไปจนถึงด้านล่างสุด */
+    height: auto;
+    /* ปรับความสูงอัตโนมัติตามความสูงขององค์ประกอบอื่น */
+    z-index: 100;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    /* เพิ่ม transition สำหรับลิงก์ */
+}
+
+.sidebar a:hover {
+    color: #bababa;
+    /* เปลี่ยนสีไอคอนเมื่อเอาเมาส์ไปชี้ */
+}
+
+.sidebar a .link-text {
+    display: none;
+    /* ซ่อนข้อความเริ่มต้น */
+    margin-left: 10px;
+    text-decoration: none;
+    transition: color 0.1s ease;
+}
+
+.sidebar:hover {
+    width: 200px;
+}
+
+.sidebar:hover .link-text {
+    display: inline;
+    /* แสดงข้อความเมื่อเมาส์ชี้ */
+}
+
+.sidebar a:hover .link-text {
+    color: #bababa;
+    /* เปลี่ยนสีข้อความภายในลิงก์เมื่อ hover */
+}
+
+
+#main {
+    transition: margin-left 0.3s;
+}
+
+/* Style สำหรับปุ่มเปิดแถบข้าง */
+#openSidebar {
+    font-size: 24px;
+    color: white;
+    padding: 16px;
+    cursor: pointer;
+    display: block;
+    /* เพื่อให้ปุ่มแสดงอยู่ในแถบข้าง */
+}
+
+/* Style สำหรับปุ่มเมื่อเมาส์ชี้ไปที่แถบข้าง */
+.sidebar:hover #openSidebar {
+    transform: translateX(140px);
+    /* ขยับปุ่มไปทางขวาเมื่อเมาส์ชี้ไปที่แถบข้าง */
+    color: rgb(80, 80, 80);
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        display: none;
+        /* ซ่อน sidebar */
+    }
+
+    #openSidebar {
+        display: block;
+        /* แสดงปุ่มเปิด */
+    }
+}
+
+.navbar {
+    background-color: #2d2d2d;
+    /* Dark background color for navbar */
+}
+
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+
+
+.navbar-toggler-icon {
+    background-color: #2d2d2d;
+    /* White color for the hamburger icon */
+}
+
+.link-style {
+    color: #ffffff;
+    /* White text color for the links */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.link-style .link-text {
+    margin-left: 10px;
+}
+
+
+
+
+
+
+@media screen and (min-width:1024px) {
+    .navbar {
+        display: none;
+        /* Hide navbar on larger screens */
+    }
+}
+
+
+@media screen and (max-width: 1024px) {
+    .sidebar {
+        display: none;
+        /* Hide sidebar on small screens */
+    }
+
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-item {
+        margin: 0;
+    }
+
+}
+
+
+
+#map {
+    width: 70%;
+    height: 640px;
+    border-radius: 10px;
+    z-index: 1;
+    position: relative;
+
+}
+
+
+/* General styling for form elements */
+.select {
+    margin: 5px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.fw-bolder {
+    font-size: 25px;
+    padding-top: 20px;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center button {
+    margin-bottom: 30px;
+    border-radius: 15px;
+
+}
+
+/* CSS สำหรับ side-image-container */
+#side-image-container {
+    position: relative;
+    bottom: 600px;
+    left: 1030px;
+    display: none;
+    border: 2px solid #fafafe;
+    width: 450px;
+    height: 350px;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin-left: 0px;
+}
+
+#side-image {
+    width: 450px;
+    height: 350px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+    #side-image-container {
+        position: static;
+        margin: 20px auto;
+        width: auto;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 2px solid #fafafe;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        display: none;
+
+    }
+
+    #map {
+        width: 100%;
+    }
+
+
+}
+
+
+#footer {
+
+    background-color: #222222;
+    padding: 10px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 0;
+
+}
+
+.legend {
+    background-color: rgb(255, 255, 255);
+    padding: 5px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    line-height: 1.5;
+    font-size: 12px;
+}
+
+.legend h4 {
+    margin: 2;
+    font-size: 14px;
+    text-align: center;
+}
+
+.legend .color-bar {
+    background: linear-gradient(to bottom, #330202, #ffe5e8);
+    height: 100px;
+    margin: 5px auto;
+    width: 20px;
+}
+
+.legend .high,
+.legend .low {
+    text-align: center;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 45%;
+    height: 80%;
+    overflow: hidden;
+}
+
+.modal-content img {
+    max-width: 30%;
+    max-height: 80%;
+    display: block;
+    margin: auto;
+}
