@@ -1,234 +1,250 @@
-const map = L.map("map", {
-    center: [18.788798983151977, 98.98539497984945],
-    zoom: 12
+mapboxgl.accessToken = 'pk.eyJ1IjoiZG9va2RhIiwiYSI6ImNscTM3azN3OTA4dmEyaXF1bmg3cXRvbDUifQ.d1Ovd_n9PwJqc_MdGS66-A';
+const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v11',
+    projection: 'globe',
+    center: [98.9890399899238, 18.785643277053523],
+    zoom: 15.5,
+    pitch: 45
 });
 
-// Define tile layers
-const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-const Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Esri (Thailand), TomTom'
-});
-const Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'ESRI'
-});
-const google_Terrain = L.tileLayer('https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-    attribution: 'Google Maps'
-});
-Esri_WorldImagery.addTo(map);
+map.addControl(new mapboxgl.NavigationControl());
 
-// Overlay layers
-const amphoe = L.tileLayer.wms("https://engrids.soc.cmu.ac.th/geoserver/CM/wms?", {
-    layers: "CM:amphoe_cm",
-    format: "image/png",
-    transparent: true
+map.on('click', (e) => {
+    console.log(e.lngLat);
 });
 
-// Base map options
-const baseMap = {
-    "ESRI Imagery": Esri_WorldImagery,
-    "Google Terrain": google_Terrain,
-    "OSM": osm,
-    "ESRI Street": Esri_WorldStreetMap
-};
-
-// Overlay map options
-const overlayMap = {
-    "Amphoe": amphoe
-};
-
-// Add layers control to the map
-L.control.layers(baseMap, overlayMap).addTo(map);
-
-// Fetch data for specific pollutants
-const API_URLS = {
-    CO: 'http://localhost:3500/api/co/',
-    NO2: 'http://localhost:3500/api/no2/',
-    SO2: 'http://localhost:3500/api/so2/',
-    O3: 'http://localhost:3500/api/o3/'
-};
-
-const fetchData = async (pollutant, day, year) => {
-    const url = `${API_URLS[pollutant]}${day}/${year}`;
-    console.log(url);
-
-    return url
-
-
-};
-document.addEventListener('DOMContentLoaded', function () {
-    const sideImageContainer = document.getElementById('side-image-container');
-    const sideImage = document.getElementById('side-image');
-
-    document.getElementById('ok-button').addEventListener('click', () => {
-        console.log("data");
-
-        displayPolygon();
-        const container = legendControl.getContainer();
-        container.style.display = container.style.display === 'none' ? 'block' : 'none';
-    });
-
-    document.getElementById('correlation-button').addEventListener('click', function () {
-        console.log("sss");
-
-        const pollutant = document.getElementById('type-pollutant').value;
-        const year = document.getElementById('year').value;
-
-        let imageUrl = '';
-        if (pollutant === 'CO' && year === '2020') {
-            imageUrl = './co-2020.png';
-        } else if (pollutant === 'NO2' && year === '2020') {
-            imageUrl = './no2-2020.png';
-        } else if (pollutant === 'SO2' && year === '2020') {
-            imageUrl = './so2-2020.png';
-        } else if (pollutant === 'O3' && year === '2020') {
-            imageUrl = './o3-2020.png';
-        } else if (pollutant === 'CO' && year === '2021') {
-            imageUrl = './co-2021.png';
-        } else if (pollutant === 'NO2' && year === '2021') {
-            imageUrl = './no2-2021.png';
-        } else if (pollutant === 'SO2' && year === '2021') {
-            imageUrl = './so2-2021.png';
-        } else if (pollutant === 'O3' && year === '2021') {
-            imageUrl = './o3-2021.png';
-        } else if (pollutant === 'CO' && year === '2022') {
-            imageUrl = './co-2022.png';
-        } else if (pollutant === 'NO2' && year === '2022') {
-            imageUrl = './no2-2022.png';
-        } else if (pollutant === 'SO2' && year === '2022') {
-            imageUrl = './so2-2022.png';
-        } else if (pollutant === 'O3' && year === '2022') {
-            imageUrl = './o3-2022.png';
-        } else if (pollutant === 'CO' && year === '2023') {
-            imageUrl = './co-2023.png';
-        } else if (pollutant === 'NO2' && year === '2023') {
-            imageUrl = './no2-2023.png';
-        } else if (pollutant === 'SO2' && year === '2023') {
-            imageUrl = './so2-2023.png';
-        } else if (pollutant === 'O3' && year === '2023') {
-            imageUrl = './o3-2023.png';
+const layerObject = (id, source, column) => {
+    return {
+        'id': id,
+        'source': source,
+        'source-layer': 'building',
+        'filter': ['==', 'extrude', 'true'],
+        'type': 'fill-extrusion',
+        'minzoom': 15,
+        'paint': {
+            'fill-extrusion-color': '#aaa',
+            'fill-extrusion-height': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                15,
+                0,
+                15.05,
+                ['get', column]
+            ],
+            'fill-extrusion-base': [
+                'interpolate',
+                ['linear'],
+                ['zoom'],
+                15,
+                0,
+                15.05,
+                ['get', 'min_height']
+            ],
+            'fill-extrusion-opacity': 0.6
         }
-
-        if (imageUrl) {
-            sideImage.src = imageUrl;
-            sideImageContainer.style.display = 'block';
-        } else {
-            console.log('Image URL is missing or incorrect.');
-        }
-    });
-});
-
-
-
-// Define color scales for each pollutant
-const pollutantColors = {
-    CO: ['#fff5f6', '#ffe5e8', '#ffcdd2', '#e57373', '#f44336', '#d32f2f', '#c62828', '#b71c1c', '#891515', '#330202'],
-    NO2: ['#4B0082', '#0000FF', '#007FFF', '#00FFFF', '#00FF7F', '#00FF00', '#7FFF00', '#FFFF00', '#FF7F00', '#FF0000'],
-    SO2: ['#fff5f6', '#ffe5e8', '#ffcdd2', '#e57373', '#f44336', '#d32f2f', '#c62828', '#b71c1c', '#891515', '#330202'],
-    O3: ['#fff5f6', '#ffe5e8', '#ffcdd2', '#e57373', '#f44336', '#d32f2f', '#c62828', '#b71c1c', '#891515', '#330202']
-};
-
-// Function to get color for a value based on a scale
-const getColorForValue = (value, minValue, maxValue, colorScale) => {
-    const numColors = colorScale.length;
-    const range = maxValue - minValue;
-    const valueRatio = (value - minValue) / range;
-    const colorIndex = Math.min(Math.floor(valueRatio * (numColors - 1)), numColors - 1);
-    return colorScale[colorIndex];
-};
-
-// Function to create color bar with legend
-var legendControlInstance = L.control({ position: 'bottomright' });
-
-legendControlInstance.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'legend');
-    div.innerHTML = '<h4>Value</h4>' +
-        '<div class="high">สูง</div>' +
-        '<div class="color-bar"></div>' +
-        '<div class="low">ต่ำ</div>';
-    return div;
-};
-
-var legendControl = legendControlInstance.addTo(map);
-legendControl.getContainer().style.display = 'none';
-
-// Clear existing GeoJSON layers
-const clearGeoJsonLayers = () => {
-    map.eachLayer((layer) => {
-        if (layer instanceof L.GeoJSON) {
-            map.removeLayer(layer);
-        }
-    });
-};
-
-// Display polygons with data
-const displayPolygon = async () => {
-    const pollutantSelect = document.getElementById('type-pollutant');
-    const daySelect = document.getElementById('day');
-    const yearSelect = document.getElementById('year');
-
-    if (!pollutantSelect || !daySelect || !yearSelect) {
-        console.error("Dropdowns not found");
-        return;
     }
+}
 
-    const pollutant = pollutantSelect.value.toUpperCase();
-    const day = daySelect.value;
-    const year = yearSelect.value;
-
-    // console.log("Selected Pollutant:", pollutant);
-    // console.log("Selected Day:", day);
-    // console.log("Selected Year:", year);
-
+const layerObjectJsonHeight = (id, source, column, multiplyNumber, min, max) => {
     try {
-        let url = await fetchData(pollutant, day, year);
-        console.log("Fetching URL:", url);
-        const dataAPI = await axios.get(url).then(r => {
-            console.log(r);
-
-        });
-
-
-
-        // console.log("Data API:", dataAPI);
-
-        // if (dataAPI && dataAPI.features && dataAPI.features.length > 0) {
-        //     console.log("GeoJSON Data:", dataAPI);
-
-        //     clearGeoJsonLayers();
-
-        //     // Determine min and max values for color scaling
-        //     const values = dataAPI.features.map(feature => feature.properties.value);
-        //     const minValue = Math.min(...values);
-        //     const maxValue = Math.max(...values);
-
-        //     L.geoJSON(dataAPI, {
-        //         style: (feature) => {
-        //             const value = feature.properties.value;
-        //             const colorScale = pollutantColors[pollutant] || ['black'];
-        //             return {
-        //                 color: getColorForValue(value, minValue, maxValue, colorScale),
-        //                 weight: 2,
-        //                 opacity: 1
-        //             };
-        //         },
-        //         onEachFeature: (feature, layer) => {
-        //             console.log("Feature Properties:", feature.properties);
-        //             layer.bindPopup(`
-        //                 Pollution: ${feature.properties.param}<br>
-        //                 Value (mol/m²): ${feature.properties.value}<br>
-        //                 USC: ${feature.properties.usc}
-        //             `);
-        //         }
-        //     }).addTo(map);
-        // } else {
-        //     console.error("No valid GeoJSON data found in response");
-        // }
+        return {
+            'id': id,
+            'type': 'fill-extrusion',
+            'source': source,
+            'paint': {
+                'fill-extrusion-color': [
+                    'interpolate',
+                    ['linear'],
+                    ['get', column],
+                    Number(min), '#f28cb1',
+                    ((Number(max) - Number(min)) / 2) + Number(min), '#f1f075',
+                    Number(max), '#51bbd6'
+                ],
+                'fill-extrusion-height': [
+                    '*',
+                    ['get', column],
+                    multiplyNumber
+                ],
+                'fill-extrusion-base': 0,
+                'fill-extrusion-opacity': 0.8
+            }
+        }
     } catch (error) {
-        console.error("Error processing geometry data:", error);
+        console.log(error)
     }
-};
+}
+
+const layerObjectUsc = (id, source, column, multiplyNumber) => {
+    return {
+        'id': id,
+        'type': 'fill-extrusion',
+        'source': source,
+        'paint': {
+            'fill-extrusion-color': [
+                'interpolate',
+                ['linear'],
+                ['get', column],
+                0.095, '#6EC207',
+                2.0, '#FFEB00',
+                5.784, '#D91656'
+            ],
+            'fill-extrusion-height': [
+                '*',
+                ['get', column],
+                multiplyNumber
+            ],
+            'fill-extrusion-base': 0,
+            'fill-extrusion-opacity': 0.8
+        }
+    }
+}
+
+const layerObjectWms = (id, source) => {
+    return {
+        'id': id,
+        'type': 'raster',
+        'source': source,
+        'paint': {}
+    }
+}
+
+map.on('load', async () => {
+    console.log("Map loaded");
+});
+
+async function getData() {
+    const typePollutant = document.getElementById('type-pollutant').value;
+    const year = document.getElementById('year').value;
+    const datasource = typePollutant + year;
+
+    document.getElementById('datasource').value = datasource;
+    document.getElementById('typePollutantName').innerHTML = typePollutant;
+
+    const response = await fetch(`/api/geojson/${typePollutant}/${year}`);
+    const data = await response.json();
+
+    map.addSource(datasource, {
+        type: 'geojson',
+        data: data
+    });
+}
+
+async function hexSel() {
+    try {
+        const typePollutant = document.getElementById('type-pollutant').value;
+        const year = document.getElementById('year').value;
+        const day = document.getElementById('day').value;
+        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const minMax = response.data[0];  // No need for extra await
+
+        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
+
+        const datasource = document.getElementById("datasource").value;
+        const id = 'display-layer';
+        const hex = layerObjectJsonHeight(id, datasource, day, k, minMax.min, minMax.max);
+
+        const style = map.getStyle();
+        const layer = style.layers.find(layer => layer.id === id);
+
+        if (layer) {
+            map.removeLayer(id);
+        }
+        map.addLayer(hex);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function hexChk() {
+    try {
+        const typePollutant = document.getElementById('type-pollutant').value;
+        const year = document.getElementById('year').value; // Add the missing year
+        const day = document.getElementById('day').value;
+        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const minMax = response.data[0];
+
+        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
+
+        const datasource = document.getElementById("datasource").value;
+        const id = 'display-layer';
+        const hex = layerObjectJsonHeight(id, datasource, day, k, minMax.min, minMax.max);
+
+        const div = document.getElementById('hex');
+        if (div.checked) {
+            map.addLayer(hex);
+        } else {
+            map.removeLayer(id);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function uscChk() {
+    let k = 100;
+
+    const datasource = document.getElementById("datasource").value;
+    const usc = document.getElementById('usc');
+    const id = 'display-usc';
+
+    const hex = layerObjectUsc(id, datasource, 'usc', k);
+    if (usc.checked) {
+        map.addLayer(hex);
+    } else {
+        map.removeLayer(id);
+    }
+}
 
 
+document.getElementById('openModalBtn').addEventListener('click', function () {
+    const pollutant = document.getElementById('type-pollutant').value;
+    const year = document.getElementById('year').value;
+    let imageUrl = '';
+    if (pollutant === 'CO' && year === '2020') {
+        imageUrl = './co-2020.png';
+    } else if (pollutant === 'NO2' && year === '2020') {
+        imageUrl = './no2-2020.png';
+    } else if (pollutant === 'SO2' && year === '2020') {
+        imageUrl = './so2-2020.png';
+    } else if (pollutant === 'O3' && year === '2020') {
+        imageUrl = './o3-2020.png';
+    } else if (pollutant === 'CO' && year === '2021') {
+        imageUrl = './co-2021.png';
+    } else if (pollutant === 'NO2' && year === '2021') {
+        imageUrl = './no2-2021.png';
+    } else if (pollutant === 'SO2' && year === '2021') {
+        imageUrl = './so2-2021.png';
+    } else if (pollutant === 'O3' && year === '2021') {
+        imageUrl = './o3-2021.png';
+    } else if (pollutant === 'CO' && year === '2022') {
+        imageUrl = './co-2022.png';
+    } else if (pollutant === 'NO2' && year === '2022') {
+        imageUrl = './no2-2022.png';
+    } else if (pollutant === 'SO2' && year === '2022') {
+        imageUrl = './so2-2022.png';
+    } else if (pollutant === 'O3' && year === '2022') {
+        imageUrl = './o3-2022.png';
+    } else if (pollutant === 'CO' && year === '2023') {
+        imageUrl = './co-2023.png';
+    } else if (pollutant === 'NO2' && year === '2023') {
+        imageUrl = './no2-2023.png';
+    } else if (pollutant === 'SO2' && year === '2023') {
+        imageUrl = './so2-2023.png';
+    } else if (pollutant === 'O3' && year === '2023') {
+        imageUrl = './o3-2023.png';
+    }
+
+    if (imageUrl) {
+        // sideImage.src = imageUrl;
+        // sideImageContainer.style.display = 'block';
+        document.getElementById('sideimage').src = imageUrl
+    }
+
+    var myModal = new bootstrap.Modal(document.getElementById('corrModal'));
+    myModal.show();
+});
 
 
 document.getElementById('.sidebar').addEventListener('mouseover', function () {
@@ -244,13 +260,6 @@ document.querySelector('.sidebar').addEventListener('mouseleave', function () {
     document.querySelector('.sidebar').style.pointerEvents = 'auto';
     document.getElementById('main').style.marginLeft = '60px'; // ความกว้างของแถบข้างเมื่อซ่อน
 });
-
-
-
-
-
-
-
 
 document.getElementById('about-link').addEventListener('click', function (event) {
     event.preventDefault();

@@ -6,6 +6,7 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
+    background: linear-gradient(to left, #eeeeee, #ffffff);
 }
 
 body {
@@ -13,30 +14,25 @@ body {
     margin: 0;
 }
 
-/* Style สำหรับปุ่มเปิดแถบข้าง */
 #openSidebar {
     font-size: 24px;
     cursor: pointer;
-    transition: transform 0.3s;
+    transition: transform 0.6s;
     padding: 10px;
     font-family: Arial, sans-serif;
 }
 
-/* Style สำหรับแถบข้าง */
 .sidebar {
     width: 60px;
-    transition: width 0.3s, opacity 0.3s;
+    transition: width 0.5s;
     opacity: 1;
     overflow-x: hidden;
     white-space: nowrap;
     background-color: #222222;
     position: fixed;
     top: 0;
-    /* ตั้งค่าให้เริ่มที่ตำแหน่งบนสุด */
     bottom: 0;
-    /* ตั้งค่าให้ขยายไปจนถึงด้านล่างสุด */
     height: auto;
-    /* ปรับความสูงอัตโนมัติตามความสูงขององค์ประกอบอื่น */
     z-index: 100;
 }
 
@@ -77,11 +73,6 @@ body {
     /* เปลี่ยนสีข้อความภายในลิงก์เมื่อ hover */
 }
 
-
-#main {
-    transition: margin-left 0.3s;
-}
-
 /* Style สำหรับปุ่มเปิดแถบข้าง */
 #openSidebar {
     font-size: 24px;
@@ -89,7 +80,6 @@ body {
     padding: 16px;
     cursor: pointer;
     display: block;
-    /* เพื่อให้ปุ่มแสดงอยู่ในแถบข้าง */
 }
 
 /* Style สำหรับปุ่มเมื่อเมาส์ชี้ไปที่แถบข้าง */
@@ -141,11 +131,6 @@ body {
     margin-left: 10px;
 }
 
-
-
-
-
-
 @media screen and (min-width:1024px) {
     .navbar {
         display: none;
@@ -174,7 +159,7 @@ body {
 
 
 #map {
-    width: 70%;
+    width: 100%;
     height: 640px;
     border-radius: 10px;
     z-index: 1;
@@ -299,23 +284,4 @@ body {
 .legend .high,
 .legend .low {
     text-align: center;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 45%;
-    height: 80%;
-    overflow: hidden;
-}
-
-.modal-content img {
-    max-width: 30%;
-    max-height: 80%;
-    display: block;
-    margin: auto;
 }

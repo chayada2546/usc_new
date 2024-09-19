@@ -47,29 +47,32 @@ const layerObject = (id, source, column) => {
     }
 }
 
-const layerObjectJsonHeight = (id, source, column, multiplyNumber) => {
-    return {
-        'id': id,
-        'type': 'fill-extrusion',
-        'source': source,
-        'paint': {
-            'fill-extrusion-color': [
-                'interpolate',
-                ['linear'],
-                ['get', column],
-                -0.000252, '#f28cb1',
-                0, '#f1f075',
-                0.000528, '#51bbd6'
-            ],
-
-            'fill-extrusion-height': [
-                '*',
-                ['get', column],
-                multiplyNumber
-            ],
-            'fill-extrusion-base': 0,
-            'fill-extrusion-opacity': 0.8
+const layerObjectJsonHeight = (id, source, column, multiplyNumber, min, max) => {
+    try {
+        return {
+            'id': id,
+            'type': 'fill-extrusion',
+            'source': source,
+            'paint': {
+                'fill-extrusion-color': [
+                    'interpolate',
+                    ['linear'],
+                    ['get', column],
+                    Number(min), '#f28cb1',
+                    ((Number(max) - Number(min)) / 2) + Number(min), '#f1f075',
+                    Number(max), '#51bbd6'
+                ],
+                'fill-extrusion-height': [
+                    '*',
+                    ['get', column],
+                    multiplyNumber
+                ],
+                'fill-extrusion-base': 0,
+                'fill-extrusion-opacity': 0.8
+            }
         }
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -87,7 +90,6 @@ const layerObjectUsc = (id, source, column, multiplyNumber) => {
                 2.0, '#FFEB00',
                 5.784, '#D91656'
             ],
-
             'fill-extrusion-height': [
                 '*',
                 ['get', column],
@@ -109,7 +111,7 @@ const layerObjectWms = (id, source) => {
 }
 
 map.on('load', async () => {
-    console.log("load");
+    console.log("Map loaded");
 });
 
 async function getData() {
@@ -117,8 +119,8 @@ async function getData() {
     const year = document.getElementById('year').value;
     const datasource = typePollutant + year;
 
-    document.getElementById('datasource').value = datasource
-    console.log(datasource)
+    document.getElementById('datasource').value = datasource;
+    document.getElementById('typePollutantName').innerHTML = typePollutant;
 
     const response = await fetch(`/api/geojson/${typePollutant}/${year}`);
     const data = await response.json();
@@ -129,76 +131,54 @@ async function getData() {
     });
 }
 
-// map.addSource('wms-source', {
-//     'type': 'raster',
-//     'tiles': [
-//         `http://localhost:8080/geoserver/nurc/wms?service=WMS&version=1.1.0&request=GetMap&layers=nurc%3Amosaic&bbox=6.346%2C36.492%2C20.83%2C46.591&width=768&height=535&srs=EPSG%3A4326&styles=&format=image%2Fpng`
-//     ],
-//     'tileSize': 256
-// });
+async function hexSel() {
+    try {
+        const typePollutant = document.getElementById('type-pollutant').value;
+        const year = document.getElementById('year').value;
+        const day = document.getElementById('day').value;
+        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const minMax = response.data[0];  // No need for extra await
 
-function buildingChk() {
-    const div = document.getElementById('building');
-    const hex = layerObject('3d-buildings', 'composite', 'height');
-    if (div.checked) {
+        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
+
+        const datasource = document.getElementById("datasource").value;
+        const id = 'display-layer';
+        const hex = layerObjectJsonHeight(id, datasource, day, k, minMax.min, minMax.max);
+
+        const style = map.getStyle();
+        const layer = style.layers.find(layer => layer.id === id);
+
+        if (layer) {
+            map.removeLayer(id);
+        }
         map.addLayer(hex);
-    } else {
-        map.removeLayer('3d-buildings');
+    } catch (error) {
+        console.log(error);
     }
 }
 
-function hexSel() {
-    const typePollutant = document.getElementById('type-pollutant').value;
-    let k = 0;
-    if (typePollutant == "CO") {
-        k = 3000
-    } else if (typePollutant == "NO2") {
-        k = 50000
-    } else if (typePollutant == "SO2") {
-        k = 5000000
-    } else {
-        k = 2000
-    }
+async function hexChk() {
+    try {
+        const typePollutant = document.getElementById('type-pollutant').value;
+        const year = document.getElementById('year').value; // Add the missing year
+        const day = document.getElementById('day').value;
+        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const minMax = response.data[0];
 
-    const datasource = document.getElementById("datasource").value;
-    const day = document.getElementById("day").value;
-    const id = 'display-layer';
-    const hex = layerObjectJsonHeight(id, datasource, day, k);
+        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
 
-    const style = map.getStyle();
-    const layers = style.layers;
-    layers.forEach(layer => {
-        if (layer.id == id) {
-            map.removeLayer(id);
+        const datasource = document.getElementById("datasource").value;
+        const id = 'display-layer';
+        const hex = layerObjectJsonHeight(id, datasource, day, k, minMax.min, minMax.max);
+
+        const div = document.getElementById('hex');
+        if (div.checked) {
             map.addLayer(hex);
         } else {
-            map.addLayer(hex);
+            map.removeLayer(id);
         }
-    });
-}
-
-function hexChk() {
-    const typePollutant = document.getElementById('type-pollutant').value;
-    let k = 0;
-    if (typePollutant == "CO") {
-        k = 100000
-    } else if (typePollutant == "NO2") {
-        k = 30000
-    } else if (typePollutant == "SO2") {
-        k = 5000000
-    } else {
-        k = 1000
-    }
-    const datasource = document.getElementById("datasource").value;
-    const day = document.getElementById("day").value
-    const div = document.getElementById('hex');
-    const id = 'display-layer';
-
-    const hex = layerObjectJsonHeight(id, datasource, day, k);
-    if (div.checked) {
-        map.addLayer(hex);
-    } else {
-        map.removeLayer(id);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -216,4 +196,3 @@ function uscChk() {
         map.removeLayer(id);
     }
 }
-

@@ -45,14 +45,11 @@ app.get('/api/geojson/:aq/:year', async (req, res) => {
 app.get("/api/getminmax/:aq/:year/:day", async (req, res) => {
     const { aq, year, day } = req.params
     console.log(aq, year, day);
-
     try {
         const result = await pool.query(`
         SELECT min(${day}), max(${day}) FROM ${aq}
         WHERE year=${year} AND usc != 'NaN';
       `);
-        console.log(result);
-
         res.json(result.rows);
     } catch (err) {
         console.error(err);
