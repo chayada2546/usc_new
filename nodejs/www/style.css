@@ -258,30 +258,3 @@ body {
     margin-top: 0;
 
 }
-
-.legend {
-    background-color: rgb(255, 255, 255);
-    padding: 5px 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    line-height: 1.5;
-    font-size: 12px;
-}
-
-.legend h4 {
-    margin: 2;
-    font-size: 14px;
-    text-align: center;
-}
-
-.legend .color-bar {
-    background: linear-gradient(to bottom, #330202, #ffe5e8);
-    height: 100px;
-    margin: 5px auto;
-    width: 20px;
-}
-
-.legend .high,
-.legend .low {
-    text-align: center;
-}

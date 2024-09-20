@@ -58,9 +58,9 @@ const layerObjectJsonHeight = (id, source, column, multiplyNumber, min, max) => 
                     'interpolate',
                     ['linear'],
                     ['get', column],
-                    Number(min), '#f28cb1',
+                    Number(min), '#51bbd6',
                     ((Number(max) - Number(min)) / 2) + Number(min), '#f1f075',
-                    Number(max), '#51bbd6'
+                    Number(max), '#f28cb1'
                 ],
                 'fill-extrusion-height': [
                     '*',
@@ -139,7 +139,7 @@ async function hexSel() {
         const response = await axios.get(`/usc/api/getminmax/${typePollutant}/${year}/${day}`);
         const minMax = response.data[0];  // No need for extra await
 
-        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
+        let k = (typePollutant === "CO") ? 6000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 3000;
 
         const datasource = document.getElementById("datasource").value;
         const id = 'display-layer';
@@ -165,7 +165,7 @@ async function hexChk() {
         const response = await axios.get(`/usc/api/getminmax/${typePollutant}/${year}/${day}`);
         const minMax = response.data[0];
 
-        let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
+        let k = (typePollutant === "CO") ? 6000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 3000;
 
         const datasource = document.getElementById("datasource").value;
         const id = 'display-layer';
@@ -251,14 +251,14 @@ document.getElementById('.sidebar').addEventListener('mouseover', function () {
     document.querySelector('.sidebar').style.width = '200px';
     document.querySelector('.sidebar').style.opacity = '1';
     document.querySelector('.sidebar').style.pointerEvents = 'auto';
-    document.getElementById('main').style.marginLeft = '200px'; // เปลี่ยนค่าตามความกว้างของแถบข้าง
+    document.getElementById('main').style.marginLeft = '200px';
 });
 
 document.querySelector('.sidebar').addEventListener('mouseleave', function () {
-    document.querySelector('.sidebar').style.width = '60px'; // ความกว้างของแถบข้างเมื่อซ่อน
+    document.querySelector('.sidebar').style.width = '60px';
     document.querySelector('.sidebar').style.opacity = '1';
     document.querySelector('.sidebar').style.pointerEvents = 'auto';
-    document.getElementById('main').style.marginLeft = '60px'; // ความกว้างของแถบข้างเมื่อซ่อน
+    document.getElementById('main').style.marginLeft = '60px';
 });
 
 document.getElementById('about-link').addEventListener('click', function (event) {
