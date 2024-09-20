@@ -16,14 +16,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 
-app.use('/', express.static('www'))
+app.use('/usc', express.static('www'))
 
 app.listen(3500, () => {
     console.log("http://localhost:3500")
 });
 
 // api 
-app.get('/api/geojson/:aq/:year', async (req, res) => {
+app.get('/usc/api/geojson/:aq/:year', async (req, res) => {
     const { aq, year } = req.params
     try {
         const result = await pool.query(`
@@ -42,7 +42,7 @@ app.get('/api/geojson/:aq/:year', async (req, res) => {
     }
 });
 
-app.get("/api/getminmax/:aq/:year/:day", async (req, res) => {
+app.get("/usc/api/getminmax/:aq/:year/:day", async (req, res) => {
     const { aq, year, day } = req.params
     console.log(aq, year, day);
     try {

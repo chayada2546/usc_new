@@ -122,7 +122,7 @@ async function getData() {
     document.getElementById('datasource').value = datasource;
     document.getElementById('typePollutantName').innerHTML = typePollutant;
 
-    const response = await fetch(`/api/geojson/${typePollutant}/${year}`);
+    const response = await fetch(`/usc/api/geojson/${typePollutant}/${year}`);
     const data = await response.json();
 
     map.addSource(datasource, {
@@ -136,7 +136,7 @@ async function hexSel() {
         const typePollutant = document.getElementById('type-pollutant').value;
         const year = document.getElementById('year').value;
         const day = document.getElementById('day').value;
-        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const response = await axios.get(`/usc/api/getminmax/${typePollutant}/${year}/${day}`);
         const minMax = response.data[0];  // No need for extra await
 
         let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
@@ -162,7 +162,7 @@ async function hexChk() {
         const typePollutant = document.getElementById('type-pollutant').value;
         const year = document.getElementById('year').value; // Add the missing year
         const day = document.getElementById('day').value;
-        const response = await axios.get(`/api/getminmax/${typePollutant}/${year}/${day}`);
+        const response = await axios.get(`/usc/api/getminmax/${typePollutant}/${year}/${day}`);
         const minMax = response.data[0];
 
         let k = (typePollutant === "CO") ? 5000 : (typePollutant === "NO2" || typePollutant === "SO2") ? 5000000 : 2000;
