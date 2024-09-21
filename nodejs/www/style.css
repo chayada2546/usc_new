@@ -10,11 +10,24 @@ body {
     background-color: #F2F2F2;
 }
 
+.navbar-brand {
+    margin-left: 25px;
+}
+
+/* ไอคอนบ้าน */
+
+.navbar-nav {
+    flex-direction: column;
+    /* เปลี่ยนเป็น column เพื่อจัดเรียงในแนวตั้ง */
+    align-items: flex-start;
+    /* จัดแนวไอเท็มไปที่ด้านซ้าย */
+}
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
 }
+
 
 #openSidebar {
     font-size: 24px;
@@ -104,11 +117,6 @@ body {
 }
 
 
-.navbar-toggler-icon {
-    background-color: #DBE2EF;
-    /* White color for the hamburger icon */
-}
-
 .link-style {
     color: #ffffff;
     /* White text color for the links */
@@ -118,9 +126,6 @@ body {
     padding: 15px;
 }
 
-.link-style .link-text {
-    margin-left: 10px;
-}
 
 @media screen and (min-width:1024px) {
     .navbar {
