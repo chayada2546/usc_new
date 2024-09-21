@@ -6,8 +6,11 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
-    background: linear-gradient(to left, #eeeeee, #ffffff);
+    /* background: linear-gradient(to left, #EBF4F6, #ffffff); */
+    background-color: #F2F2F2;
 }
+
+
 
 body {
     font-family: Arial, sans-serif;
@@ -28,7 +31,7 @@ body {
     opacity: 1;
     overflow-x: hidden;
     white-space: nowrap;
-    background-color: #222222;
+    background-color: #F9F7F7;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -40,14 +43,14 @@ body {
     display: flex;
     align-items: center;
     padding: 16px;
-    color: white;
+    color: #112D4E;
     text-decoration: none;
     transition: color 0.3s ease;
     /* เพิ่ม transition สำหรับลิงก์ */
 }
 
 .sidebar a:hover {
-    color: #bababa;
+    color: #3F72AF;
     /* เปลี่ยนสีไอคอนเมื่อเอาเมาส์ไปชี้ */
 }
 
@@ -69,14 +72,14 @@ body {
 }
 
 .sidebar a:hover .link-text {
-    color: #bababa;
+    color: #3F72AF;
     /* เปลี่ยนสีข้อความภายในลิงก์เมื่อ hover */
 }
 
 /* Style สำหรับปุ่มเปิดแถบข้าง */
 #openSidebar {
     font-size: 24px;
-    color: white;
+    color: #112D4E;
     padding: 16px;
     cursor: pointer;
     display: block;
@@ -86,7 +89,7 @@ body {
 .sidebar:hover #openSidebar {
     transform: translateX(140px);
     /* ขยับปุ่มไปทางขวาเมื่อเมาส์ชี้ไปที่แถบข้าง */
-    color: rgb(80, 80, 80);
+    color: #DBE2EF;
 }
 
 @media screen and (max-width: 768px) {
@@ -101,20 +104,9 @@ body {
     }
 }
 
-.navbar {
-    background-color: #2d2d2d;
-    /* Dark background color for navbar */
-}
-
-
-.navbar-nav .nav-link {
-    color: #ffffff;
-}
-
-
 
 .navbar-toggler-icon {
-    background-color: #2d2d2d;
+    background-color: #DBE2EF;
     /* White color for the hamburger icon */
 }
 
@@ -249,7 +241,7 @@ body {
 
 #footer {
 
-    background-color: #222222;
+    background-color: #112D4E;
     padding: 10px;
     width: 100%;
     height: 50px;
