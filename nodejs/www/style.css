@@ -11,7 +11,6 @@ body {
 }
 
 
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -238,6 +237,14 @@ body {
 
 }
 
+.form-check {
+
+    padding-top: 15px;
+}
+
+#openModalBtn {
+    margin-top: 5px;
+}
 
 #footer {
 
