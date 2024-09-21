@@ -32,11 +32,36 @@
                 <i class="bi bi-globe-central-south-asia"></i> <span class="link-text">GEE</span>
             </a>
     </div>
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #F9F7F7;"> <a class="navbar-brand"
+            href="index.html">
+            <i class="bi bi-house-door-fill" id="icon"></i>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html" id="about-link" style="color: #112D4E;">เกี่ยวกับฉัน</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./thesis.html" id="manual" style="color: #112D4E;">เกี่ยวกับงานวิจัย</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manual.html" id="manual" style="color: #112D4E;">คู่มือ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://earthengine.google.com/" id="gee-link"
+                        style="color: #112D4E;">GEE</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-
-    <div class="container mt-3  mb-3">
-        <div class="row  ">
-            <div class="col-md-4">
+    <div class="container mb-3">
+        <div class="row mt-4 ">
+            <div class="col-md-4 mt-5 ">
                 <label for="pollutant" class="form-label">1. เลือกมลพิษทางอากาศ</label>
                 <select class="form-select" id="type-pollutant" onchange="getData()">
                     <option value="CO">คาร์บอนมอนอกไซด์ (CO)</option>
@@ -46,7 +71,7 @@
                 </select>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 mt-5">
                 <label for="year" class="form-label">2. เลือกปี</label>
                 <select class="form-select" id="year" onchange="getData()">
                     <option value="2020">2563-2564</option>
@@ -55,7 +80,7 @@
                     <option value="2023">2566-2567</option>
                 </select>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-3 mt-5">
                 <label for="day" class="form-label">3. เลือกวัน</label>
                 <select class="form-select" id="day" onchange="hexSel()">
                     <option value="sun">อาทิตย์</option>
@@ -73,12 +98,12 @@
     <div class="container">
         <input type="hidden" id="datasource">
         <div class="row  mt-1 ">
-            <div class="col-2 ">
+            <!-- <div class="col-2 ">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="building" onchange="buildingChk()">
                     <label class="form-check-label" for="flexSwitchCheckDefault">3D Building</label>
                 </div>
-            </div>
+            </div> -->
             <div class="col-2">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="hex" onchange="hexChk()" checked>
