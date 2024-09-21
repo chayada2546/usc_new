@@ -28,12 +28,11 @@ const layerObject = (id, source, column) => {
                 'interpolate',
                 ['linear'],
                 ['zoom'],
-                10,   // เริ่มที่ซูม 10
+                15,
                 0,
-                15,   // ซูม 15 เห็นความสูง
-                100   // ใช้ค่าคงที่ 100 เพื่อทดสอบความสูง
+                15.05,
+                ['get', column]
             ],
-
             'fill-extrusion-base': [
                 'interpolate',
                 ['linear'],

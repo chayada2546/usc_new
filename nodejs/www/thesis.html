@@ -99,33 +99,38 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html" id="about-link">เกี่ยวกับฉัน</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./thesis.html" id="manual">เกี่ยวกับงานวิจัย</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="manual.html" id="manual">คู่มือ</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="https://earthengine.google.com/" id="gee-link">GEE</a>
-                </li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <a href="about.html" id="about-link" class="link-style">
+                        <i class="bi bi-file-person-fill"></i> <span class="link-text">เกี่ยวกับฉัน</span>
+                    </a>
+                    <a href="about.html" id="about-link" class="link-style"></a>
+                    <i class="bi bi-file-person-fill"></i> <span class="link-text">เกี่ยวกับงานวิจัย</span>
+                    </a>
+                    <a href="manual.html" id="manual" class="link-style">
+                        <i class="bi bi-book-half"></i> <span class="link-text">คู่มือ</span>
+                    </a>
+                    <a href="./gee/index.html" id="gee-link" class="link-style">
+                        <i class="bi bi-globe-central-south-asia"></i> <span class="link-text">GEE</span>
+                    </a>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="image-container mt-5">
+                <img src="./ABOUT US.png" alt="First Image" class="image">
+            </div>
         </div>
-    </nav>
-    <div class="container">
-        <div class="image-container mt-5">
-            <img src="./ABOUT US.png" alt="First Image" class="image">
-        </div>
-    </div>
 
-    <footer id="footer" class="text-center mt-3">
-        <p>© 2024 by Chayada Wanna</p>
-    </footer>
+        <footer id="footer" class="text-center mt-3">
+            <p>© 2024 by Chayada Wanna</p>
+        </footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
