@@ -101,14 +101,14 @@ const layerObjectUsc = (id, source, column, multiplyNumber) => {
     }
 }
 
-const layerObjectWms = (id, source) => {
-    return {
-        'id': id,
-        'type': 'raster',
-        'source': source,
-        'paint': {}
-    }
-}
+// const layerObjectWms = (id, source) => {
+//     return {
+//         'id': id,
+//         'type': 'raster',
+//         'source': source,
+//         'paint': {}
+//     }
+// }
 
 map.on('load', async () => {
     console.log("Map loaded");
