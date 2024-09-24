@@ -14,38 +14,39 @@ map.on('click', (e) => {
     console.log(e.lngLat);
 });
 
-const layerObject = (id, source, column) => {
-    return {
-        'id': id,
-        'source': source,
-        'source-layer': 'building',
-        'filter': ['==', 'extrude', 'true'],
-        'type': 'fill-extrusion',
-        'minzoom': 15,
-        'paint': {
-            'fill-extrusion-color': '#aaa',
-            'fill-extrusion-height': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                15,
-                0,
-                15.05,
-                ['get', column]
-            ],
-            'fill-extrusion-base': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                15,
-                0,
-                15.05,
-                ['get', 'min_height']
-            ],
-            'fill-extrusion-opacity': 0.6
+function buildingChk() {
+    const buildingCheckbox = document.getElementById('building');
+    if (buildingCheckbox.checked) {
+        if (!map.getLayer('3d-buildings')) {
+            map.addLayer({
+                'id': '3d-buildings',
+                'source': 'composite',
+                'source-layer': 'building',
+                'filter': ['==', 'extrude', 'true'],
+                'type': 'fill-extrusion',
+                'minzoom': 15,
+                'paint': {
+                    'fill-extrusion-color': '#aaa',
+                    'fill-extrusion-height': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        16,
+                        0,
+                        16.05,
+                        ['get', 'height'] // ใช้คอลัมน์ที่ถูกต้อง
+                    ],
+                    'fill-extrusion-opacity': 0.6
+                }
+            });
+        }
+    } else {
+        if (map.getLayer('3d-buildings')) {
+            map.removeLayer('3d-buildings');
         }
     }
 }
+
 
 const layerObjectJsonHeight = (id, source, column, multiplyNumber, min, max) => {
     try {
@@ -101,14 +102,6 @@ const layerObjectUsc = (id, source, column, multiplyNumber) => {
     }
 }
 
-// const layerObjectWms = (id, source) => {
-//     return {
-//         'id': id,
-//         'type': 'raster',
-//         'source': source,
-//         'paint': {}
-//     }
-// }
 
 map.on('load', async () => {
     console.log("Map loaded");
@@ -281,6 +274,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('side-image-container').style.display = 'none';
     });
 });
+
 
 
 
