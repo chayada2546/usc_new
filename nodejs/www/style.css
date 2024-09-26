@@ -57,7 +57,7 @@ body {
     padding: 16px;
     color: #112D4E;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease;
     /* เพิ่ม transition สำหรับลิงก์ */
 }
 
@@ -127,7 +127,7 @@ body {
 }
 
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:1440px) {
     .navbar {
         display: none;
         /* Hide navbar on larger screens */
@@ -135,7 +135,7 @@ body {
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1440px) {
     .sidebar {
         display: none;
         /* Hide sidebar on small screens */
